@@ -1,0 +1,20 @@
+---
+layout: layouts/base.njk
+---
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+      <div class="wrap">
+        <p class="eyebrow">{{ eyebrow }}</p>
+        <h1>{% if titleHtml %}{{ titleHtml | safe }}{% else %}{{ title }}{% endif %}</h1>
+      </div>
+    </section>
+
+    <!-- PAGE INTRO / CONTENT -->
+    <section class="page-intro">
+      <div class="wrap{% if wide %} wrap-wide{% endif %}">
+{{ content | safe }}
+      </div>
+    </section>
+{% if divider %}
+    <hr class="section-divider" aria-hidden="true">
+{% endif %}
