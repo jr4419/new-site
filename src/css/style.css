@@ -312,7 +312,7 @@ p { margin: 0 0 1em; }
 /* ============================
    Hero
    ============================ */
-.hero { padding: 72px 0 40px; }
+.hero { padding: 44px 0 32px; }
 .hero-inner {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -425,14 +425,14 @@ p { margin: 0 0 1em; }
    Subpage header
    ============================ */
 .page-header {
-  padding: 16px 0 16px;
+  padding: 8px 0;
 }
 .page-header h1 {
   font-size: clamp(2rem, 4vw, 2.8rem);
   margin-bottom: 0;
 }
 .page-intro {
-  padding: 48px 0 48px;
+  padding: 28px 0 32px;
   background: var(--white);
 }
 .placeholder-note {
@@ -688,7 +688,7 @@ a:focus-visible, button:focus-visible {
   .header-inner { gap: 12px; }
   .logo-text { font-size: 1.2rem; }
 
-  .hero { padding: 40px 0 28px; }
+  .hero { padding: 28px 0 20px; }
   .hero-actions { flex-direction: column; align-items: stretch; }
   .hero-actions .btn { text-align: center; }
 
@@ -711,10 +711,10 @@ a:focus-visible, button:focus-visible {
 /* ============================
    Facility gallery (home)
    ============================ */
-.gallery { padding: 64px 0 40px; }
+.gallery { padding: 36px 0 28px; }
 .gallery-head {
   max-width: 640px;
-  margin-bottom: 32px;
+  margin-bottom: 22px;
 }
 .gallery-head h1 {
   font-size: clamp(2rem, 4.5vw, 3rem);
@@ -819,7 +819,7 @@ a:focus-visible, button:focus-visible {
 }
 
 @media (max-width: 520px) {
-  .gallery { padding: 40px 0 28px; }
+  .gallery { padding: 24px 0 18px; }
   .gallery-slideshow { aspect-ratio: 4/3; }
   .gallery-actions { flex-direction: column; align-items: stretch; }
   .gallery-actions .btn { text-align: center; }
@@ -832,23 +832,24 @@ a:focus-visible, button:focus-visible {
 .page-content .lead {
   font-size: 1.1rem;
   color: var(--ink);
+  margin: 0 0 0.85em;
 }
 .page-content h2 {
   font-size: 1.35rem;
   color: var(--teal);
-  margin: 1.8em 0 0.5em;
+  margin: 1.3em 0 0.4em;
 }
 .page-content h3 {
   font-size: 1.08rem;
-  margin: 1.4em 0 0.4em;
+  margin: 1.1em 0 0.35em;
 }
 .page-content ul {
   list-style: disc;
   padding-left: 1.35em;
-  margin: 0 0 1.2em;
+  margin: 0 0 1em;
 }
-.page-content ul li { margin-bottom: 0.4em; }
-.page-content p { margin: 0 0 1em; }
+.page-content ul li { margin-bottom: 0.35em; }
+.page-content p { margin: 0 0 0.85em; }
 .page-content strong { color: var(--ink); }
 
 .page-cta {
