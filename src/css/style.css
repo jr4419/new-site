@@ -85,9 +85,10 @@ p { margin: 0 0 1em; }
   position: sticky;
   top: 0;
   z-index: 10;
-  background: rgba(242, 246, 249, 0.92);
+  background: rgba(255, 255, 255, 0.94);
   backdrop-filter: blur(6px);
   border-bottom: 1px solid var(--line);
+  box-shadow: 0 1px 3px rgba(16, 42, 60, 0.06);
 }
 .header-inner {
   display: flex;
@@ -222,7 +223,6 @@ p { margin: 0 0 1em; }
   opacity: 0;
 }
 .nav-toggle-btn {
-  display: none;
   flex-direction: column;
   justify-content: center;
   gap: 5px;
