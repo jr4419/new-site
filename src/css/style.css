@@ -425,7 +425,7 @@ p { margin: 0 0 1em; }
    Subpage header
    ============================ */
 .page-header {
-  padding: 64px 0 56px;
+  padding: 64px 0 24px;
 }
 .page-header .wrap {
   max-width: 760px;
@@ -435,12 +435,8 @@ p { margin: 0 0 1em; }
   margin-bottom: 0;
 }
 .page-intro {
-  padding: 24px 0 48px;
+  padding: 56px 0 48px;
   background: var(--white);
-}
-.page-intro .lead,
-.page-intro > .wrap > p:first-child {
-  margin-top: 0;
 }
 .page-intro .wrap {
   max-width: 760px;
