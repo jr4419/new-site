@@ -11,44 +11,101 @@ description: Grand Central Vascular Surgery, led by Dr. Thomas F. Qin, provides 
           <p class="gallery-lead">Grand Central Vascular Surgery offers a calm, modern setting in the heart of New York City &mdash; equipped for in-office vascular ultrasound, diagnosis, and minimally invasive treatment, all in one place.</p>
         </div>
 
-        <div class="gallery-grid">
-          <!-- TODO: replace each placeholder with a real facility photo.
-               Uncomment the <img> line, drop the file in src/images/, and keep the <figcaption>. -->
-          <figure class="gallery-item">
-            <!-- <img src="/images/facility-reception.jpg" alt="Reception and waiting area"> -->
-            <figcaption class="gallery-caption">Reception &amp; Waiting Area</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <!-- <img src="/images/facility-consultation.jpg" alt="Consultation room"> -->
-            <figcaption class="gallery-caption">Consultation Room</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <!-- <img src="/images/facility-ultrasound.jpg" alt="Vascular ultrasound suite"> -->
-            <figcaption class="gallery-caption">Vascular Ultrasound Suite</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <!-- <img src="/images/facility-procedure.jpg" alt="Procedure room"> -->
-            <figcaption class="gallery-caption">Procedure Room</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <!-- <img src="/images/facility-recovery.jpg" alt="Recovery area"> -->
-            <figcaption class="gallery-caption">Recovery Area</figcaption>
-          </figure>
-          <figure class="gallery-item">
-            <!-- <img src="/images/facility-exterior.jpg" alt="Office entrance on Madison Avenue"> -->
-            <figcaption class="gallery-caption">315 Madison Avenue</figcaption>
-          </figure>
+        <div class="gallery-slideshow" data-gallery>
+          <div class="gallery-slides">
+            <!-- TODO: replace each placeholder with a real facility photo.
+                 Uncomment the <img> line, drop the file in src/images/, and keep the <figcaption>. -->
+            <figure class="gallery-slide is-active">
+              <!-- <img src="/images/facility-reception.jpg" alt="Reception and waiting area"> -->
+              <figcaption class="gallery-caption">Reception &amp; Waiting Area</figcaption>
+            </figure>
+            <figure class="gallery-slide">
+              <!-- <img src="/images/facility-consultation.jpg" alt="Consultation room"> -->
+              <figcaption class="gallery-caption">Consultation Room</figcaption>
+            </figure>
+            <figure class="gallery-slide">
+              <!-- <img src="/images/facility-ultrasound.jpg" alt="Vascular ultrasound suite"> -->
+              <figcaption class="gallery-caption">Vascular Ultrasound Suite</figcaption>
+            </figure>
+            <figure class="gallery-slide">
+              <!-- <img src="/images/facility-procedure.jpg" alt="Procedure room"> -->
+              <figcaption class="gallery-caption">Procedure Room</figcaption>
+            </figure>
+            <figure class="gallery-slide">
+              <!-- <img src="/images/facility-recovery.jpg" alt="Recovery area"> -->
+              <figcaption class="gallery-caption">Recovery Area</figcaption>
+            </figure>
+            <figure class="gallery-slide">
+              <!-- <img src="/images/facility-exterior.jpg" alt="Office entrance on Madison Avenue"> -->
+              <figcaption class="gallery-caption">315 Madison Avenue</figcaption>
+            </figure>
+          </div>
+
+          <button type="button" class="gallery-arrow gallery-arrow-prev" aria-label="Previous photo">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M15 4 L7 12 L15 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+          <button type="button" class="gallery-arrow gallery-arrow-next" aria-label="Next photo">
+            <svg viewBox="0 0 24 24" width="20" height="20"><path d="M9 4 L17 12 L9 20" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"/></svg>
+          </button>
+
+          <div class="gallery-dots" role="tablist" aria-label="Facility photos">
+            <button type="button" class="gallery-dot is-active" aria-label="Show slide 1"></button>
+            <button type="button" class="gallery-dot" aria-label="Show slide 2"></button>
+            <button type="button" class="gallery-dot" aria-label="Show slide 3"></button>
+            <button type="button" class="gallery-dot" aria-label="Show slide 4"></button>
+            <button type="button" class="gallery-dot" aria-label="Show slide 5"></button>
+            <button type="button" class="gallery-dot" aria-label="Show slide 6"></button>
+          </div>
         </div>
 
         <div class="gallery-actions">
           <a href="#contact" class="btn btn-primary">Request a Consultation</a>
-          <a href="tel:{{ site.phoneTel }}" class="btn btn-ghost">
-            <!-- TODO: replace with official phone number -->
-            Call {{ site.phoneDisplay }}
-          </a>
         </div>
       </div>
     </section>
+
+    <script>
+      (function () {
+        document.querySelectorAll('[data-gallery]').forEach(function (gallery) {
+          var slides = gallery.querySelectorAll('.gallery-slide');
+          var dots = gallery.querySelectorAll('.gallery-dot');
+          var prevBtn = gallery.querySelector('.gallery-arrow-prev');
+          var nextBtn = gallery.querySelector('.gallery-arrow-next');
+          var current = 0;
+          var timer;
+
+          function show(index) {
+            slides[current].classList.remove('is-active');
+            dots[current].classList.remove('is-active');
+            current = (index + slides.length) % slides.length;
+            slides[current].classList.add('is-active');
+            dots[current].classList.add('is-active');
+          }
+
+          function next() { show(current + 1); }
+          function prev() { show(current - 1); }
+
+          function startAuto() {
+            stopAuto();
+            timer = setInterval(next, 5000);
+          }
+          function stopAuto() {
+            if (timer) clearInterval(timer);
+          }
+
+          nextBtn.addEventListener('click', function () { next(); startAuto(); });
+          prevBtn.addEventListener('click', function () { prev(); startAuto(); });
+          dots.forEach(function (dot, i) {
+            dot.addEventListener('click', function () { show(i); startAuto(); });
+          });
+
+          gallery.addEventListener('mouseenter', stopAuto);
+          gallery.addEventListener('mouseleave', startAuto);
+
+          startAuto();
+        });
+      })();
+    </script>
 
     <hr class="section-divider" aria-hidden="true">
 
