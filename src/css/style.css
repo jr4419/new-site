@@ -425,10 +425,7 @@ p { margin: 0 0 1em; }
    Subpage header
    ============================ */
 .page-header {
-  padding: 64px 0 24px;
-}
-.page-header .wrap {
-  max-width: 760px;
+  padding: 64px 0 16px;
 }
 .page-header h1 {
   font-size: clamp(2rem, 4vw, 2.8rem);
@@ -437,9 +434,6 @@ p { margin: 0 0 1em; }
 .page-intro {
   padding: 56px 0 48px;
   background: var(--white);
-}
-.page-intro .wrap {
-  max-width: 760px;
 }
 .placeholder-note {
   font-size: 0.85rem;
