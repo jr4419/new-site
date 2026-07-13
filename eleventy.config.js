@@ -11,6 +11,13 @@ export default function (eleventyConfig) {
   eleventyConfig.addPassthroughCopy({ "src/css": "css" });
   eleventyConfig.addPassthroughCopy({ "src/js": "js" });
 
+  // Copy the Decap CMS admin panel (src/admin/index.html + config.yml)
+  // straight through to /admin/ on the built site.
+  eleventyConfig.addPassthroughCopy({ "src/admin": "admin" });
+
+  // Copy any images staff upload through the CMS media library.
+  eleventyConfig.addPassthroughCopy({ "src/images/uploads": "images/uploads" });
+
   return {
     dir: {
       input: "src",

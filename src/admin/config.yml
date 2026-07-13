@@ -1,0 +1,129 @@
+backend:
+  name: github
+  repo: jr4419/new-site
+  branch: main
+  base_url: https://YOUR-WORKER-SUBDOMAIN.workers.dev
+  auth_endpoint: auth
+
+# Turn this on so staff edits go into a review state (a pull request-like
+# draft) before they go live, instead of publishing instantly.
+publish_mode: editorial_workflow
+
+media_folder: "src/images/uploads"
+public_folder: "/images/uploads"
+
+collections:
+  - name: "arterial"
+    label: "Arterial Disorders"
+    files:
+      - name: "atherosclerosis"
+        label: "Atherosclerosis and Hyperlipidemia"
+        file: "src/atherosclerosis-and-hyperlipidemia.md"
+        fields: &conditionFields
+          - { label: "Layout", name: "layout", widget: "hidden", default: "layouts/page.njk" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Eyebrow (category label)", name: "eyebrow", widget: "hidden", default: "Arterial Disorders" }
+          - { label: "SEO Description", name: "description", widget: "text" }
+          - { label: "Intro / Lead Paragraph", name: "lead", widget: "text" }
+          - { label: "Page Content", name: "body", widget: "markdown" }
+          - { label: "Closing Call-to-Action Text", name: "cta", widget: "text", required: false }
+          - { label: "Call-to-Action Button Label", name: "ctaButton", widget: "string", required: false, default: "Request an Appointment" }
+      - name: "aortic-aneurysm"
+        label: "Aortic Aneurysm and Dissection"
+        file: "src/aortic-aneurysm-and-dissection.md"
+        fields: *conditionFields
+      - name: "carotid-stenosis"
+        label: "Carotid Stenosis and Stroke"
+        file: "src/carotid-stenosis-and-stroke.md"
+        fields: *conditionFields
+      - name: "mesenteric-ischemia"
+        label: "Mesenteric Ischemia"
+        file: "src/mesenteric-ischemia.md"
+        fields: *conditionFields
+      - name: "renal-artery-stenosis"
+        label: "Renal Artery Stenosis and Renovascular Hypertension"
+        file: "src/renal-artery-stenosis-and-hypertension.md"
+        fields: *conditionFields
+      - name: "peripheral-arterial-disease"
+        label: "Peripheral Arterial Disease and Amputation"
+        file: "src/peripheral-arterial-disease-and-amputation.md"
+        fields: *conditionFields
+      - name: "dialysis-access"
+        label: "Dialysis Access"
+        file: "src/dialysis-access.md"
+        fields: *conditionFields
+
+  - name: "venous"
+    label: "Venous Disorders"
+    files:
+      - name: "varicose-veins"
+        label: "Varicose Veins"
+        file: "src/varicose-veins.md"
+        fields: &venousFields
+          - { label: "Layout", name: "layout", widget: "hidden", default: "layouts/page.njk" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Eyebrow (category label)", name: "eyebrow", widget: "hidden", default: "Venous Disorders" }
+          - { label: "SEO Description", name: "description", widget: "text" }
+          - { label: "Intro / Lead Paragraph", name: "lead", widget: "text" }
+          - { label: "Page Content", name: "body", widget: "markdown" }
+          - { label: "Closing Call-to-Action Text", name: "cta", widget: "text", required: false }
+          - { label: "Call-to-Action Button Label", name: "ctaButton", widget: "string", required: false, default: "Request an Appointment" }
+      - name: "spider-veins"
+        label: "Spider Veins"
+        file: "src/spider-veins.md"
+        fields: *venousFields
+      - name: "dvt-pe"
+        label: "Deep Vein Thrombosis and Pulmonary Embolism"
+        file: "src/deep-vein-thrombosis-and-pulmonary-embolism.md"
+        fields: *venousFields
+      - name: "cvi-leg-ulcer"
+        label: "Chronic Venous Insufficiency and Leg Ulcer"
+        file: "src/chronic-venous-insufficiency-and-leg-ulcer.md"
+        fields: *venousFields
+      - name: "pcs-varicocele"
+        label: "Female Pelvic Congestion Syndrome and Testicular Varicocele"
+        file: "src/female-pelvic-congestion-syndrome-and-testicular-varicocele.md"
+        fields: *venousFields
+
+  - name: "procedures"
+    label: "Procedures Highlight"
+    files:
+      - name: "thermal-treatment"
+        label: "Thermal Treatment: EVRF & EVLT"
+        file: "src/thermal-treatment-evrf-and-evlt.md"
+        fields: &proceduresFields
+          - { label: "Layout", name: "layout", widget: "hidden", default: "layouts/page.njk" }
+          - { label: "Title (plain text, used in browser tab)", name: "title", widget: "string" }
+          - { label: "Title (formatted, shown on page)", name: "titleHtml", widget: "string", required: false, hint: "HTML allowed, e.g. wrap the ampersand in <span class=\"amp\">&</span>" }
+          - { label: "Eyebrow (category label)", name: "eyebrow", widget: "hidden", default: "Procedures Highlight" }
+          - { label: "SEO Description", name: "description", widget: "text" }
+          - { label: "Intro / Lead Paragraph", name: "lead", widget: "text" }
+          - { label: "Page Content", name: "body", widget: "markdown" }
+          - { label: "Closing Call-to-Action Text", name: "cta", widget: "text", required: false }
+          - { label: "Call-to-Action Button Label", name: "ctaButton", widget: "string", required: false, default: "Request an Appointment" }
+      - name: "non-thermal-varithena"
+        label: "Non-Thermal Treatment: Varithena"
+        file: "src/non-thermal-treatment-varithena.md"
+        fields: *proceduresFields
+      - name: "leg-artery-recanalization"
+        label: "Ambulatory Leg Artery Endovascular Recanalization"
+        file: "src/ambulatory-leg-artery-endovascular-recanalization.md"
+        fields: *proceduresFields
+      - name: "dialysis-access-maintenance"
+        label: "Ambulatory Dialysis Access Maintenance"
+        file: "src/ambulatory-dialysis-access-maintenance.md"
+        fields: *proceduresFields
+
+  - name: "settings"
+    label: "Site Settings"
+    files:
+      - name: "site"
+        label: "Contact Info & Map"
+        file: "src/_data/site.json"
+        fields:
+          - { label: "Practice Name", name: "name", widget: "string" }
+          - { label: "Phone (displayed)", name: "phoneDisplay", widget: "string" }
+          - { label: "Phone (for tel: link, e.g. +16468726387)", name: "phoneTel", widget: "string" }
+          - { label: "Email", name: "email", widget: "string" }
+          - { label: "Address", name: "address", widget: "string" }
+          - { label: "Google Maps Embed URL", name: "mapEmbed", widget: "string" }
