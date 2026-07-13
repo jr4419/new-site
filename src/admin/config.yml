@@ -2,7 +2,7 @@ backend:
   name: github
   repo: jr4419/new-site
   branch: main
-  base_url: https://decap-proxy.jruan.workers.dev/
+  base_url: https://decap-proxy.jruan.workers.dev
   auth_endpoint: auth
 
 # Turn this on so staff edits go into a review state (a pull request-like
