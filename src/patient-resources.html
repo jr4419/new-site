@@ -1,0 +1,30 @@
+---
+layout: layouts/page.njk
+title: Patient Resources
+eyebrow: Patient Resources
+wide: true
+divider: true
+noWrap: true
+description: Educational articles and resources for patients of Grand Central Vascular Surgery, led by Dr. Thomas F. Qin.
+---
+        <p class="placeholder-note">This page is a placeholder &mdash; our patient education library is coming soon.</p>
+        <div class="blog-grid">
+          {% set articles = [
+            "Understanding Varicose Veins: Causes, Symptoms & Treatment Options",
+            "What to Expect Before and After Your Vein Procedure",
+            "Peripheral Artery Disease: Recognizing the Warning Signs",
+            "Living with Dialysis Access: A Patient's Guide",
+            "Minimally Invasive vs. Open Vascular Surgery: What's the Difference?",
+            "Preparing for Your First Consultation"
+          ] %}
+          {% for article in articles %}
+          <article class="blog-card">
+            <div class="blog-card-media" aria-hidden="true"></div>
+            <div class="blog-card-body">
+              <p class="blog-card-meta">Patient Resources &middot; Coming Soon</p>
+              <h3 class="blog-card-title">{{ article }}</h3>
+              <p class="blog-card-excerpt">This article is currently being written and will be published soon. Check back for in-depth, easy-to-understand guidance from Dr. Qin and the team.</p>
+            </div>
+          </article>
+          {% endfor %}
+        </div>

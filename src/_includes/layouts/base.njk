@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>{% if title %}{{ title }} | {{ site.name }}{% else %}{{ site.name }} | Dr. Thomas F. Qin{% endif %}</title>
+  <meta name="description" content="{{ description }}">
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,300;9..144,500;9..144,600&family=Pinyon+Script&family=Source+Sans+3:wght@400;500;600&display=swap" rel="stylesheet">
+
+  <link rel="stylesheet" href="/css/style.css">
+</head>
+<body>
+
+  <header class="site-header">
+    <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
+    <div class="wrap header-inner">
+      <a href="/#top" class="logo">
+        <span class="logo-text-wrap">
+          <span class="logo-text">Grand Central Vascular Surgery<br> &amp; Vein Center</span>
+          <span class="logo-tagline">Comprehensive and professional vascular care.</span>
+        </span>
+      </a>
+      <nav class="main-nav">
+        <a href="/#provider">Provider</a>
+        {% for cat in nav.categories %}
+        <div class="nav-item">
+          <a href="{{ cat.url }}">{{ cat.label }}<span class="caret" aria-hidden="true"></span></a>
+          <ul class="dropdown">
+            {% for item in cat.items %}
+            <li><a href="{{ item.url }}">{{ item.label }}</a></li>
+            {% endfor %}
+          </ul>
+        </div>
+        {% endfor %}
+        <a href="/patient-resources.html">Patient Resources</a>
+      </nav>
+      <a href="#contact" class="btn btn-primary nav-cta">Contact Us</a>
+      <label for="nav-toggle" class="nav-toggle-btn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </label>
+    </div>
+    <nav class="mobile-nav">
+      <a href="/#provider">Provider</a>
+      {% for cat in nav.categories %}
+      <details class="mobile-nav-group">
+        <summary>{{ cat.label }}</summary>
+        <a href="{{ cat.url }}">All {{ cat.label }}</a>
+        {% for item in cat.items %}
+          <a href="{{ item.url }}">{{ item.label }}</a>
+        {% endfor %}
+      </details>
+      {% endfor %}
+      <a href="/patient-resources.html">Patient Resources</a>
+      <a href="#contact" class="btn btn-primary mobile-cta">Contact Us</a>
+    </nav>
+  </header>
+
+  <main id="top">
+
+{{ content | safe }}
+
+    <!-- CONTACT -->
+    <section id="contact" class="contact">
+      <div class="wrap contact-inner">
+        <div class="contact-info">
+          <p class="eyebrow">Get in Touch</p>
+          <h2>Schedule a Consultation</h2>
+          <p class="contact-detail">
+            Phone: <a href="tel:{{ site.phoneTel }}">{{ site.phoneDisplay }}</a>
+          </p>
+          <p class="contact-detail">
+            Email: <a href="mailto:{{ site.email }}">{{ site.email }}</a>
+          </p>
+          <p class="contact-detail">
+            Address: {{ site.address }}
+          </p>
+          <div class="contact-map">
+            <iframe
+              src="{{ site.mapEmbed }}"
+              width="100%"
+              height="260"
+              style="border:0;"
+              allowfullscreen=""
+              loading="lazy"
+              referrerpolicy="no-referrer-when-downgrade"
+              title="Office location map"></iframe>
+          </div>
+        </div>
+        <form class="contact-form" aria-label="Consultation request form">
+          <label>
+            Name
+            <input type="text" name="name" required>
+          </label>
+          <label>
+            Email
+            <input type="email" name="email" required>
+          </label>
+          <label>
+            Phone
+            <input type="tel" name="phone">
+          </label>
+          <label>
+            How can we help?
+            <textarea name="message" rows="4"></textarea>
+          </label>
+          <button type="submit" class="btn btn-primary">Send Request</button>
+          <p class="form-note">This form is not yet connected to a back end &mdash; submissions will need a handler before launch.</p>
+        </form>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <div class="wrap footer-inner">
+      <p>&copy; <span id="year"></span> Grand Central Vascular Surgery. All rights reserved.</p>
+      <p class="footer-note">Dr. Thomas F. Qin, MD</p>
+    </div>
+  </footer>
+
+  <script src="/js/main.js"></script>
+</body>
+</html>

@@ -1,0 +1,33 @@
+---
+layout: layouts/base.njk
+---
+    <!-- PAGE HEADER -->
+    <section class="page-header">
+      <div class="wrap">
+        <p class="eyebrow">{{ eyebrow }}</p>
+        <h1>{% if titleHtml %}{{ titleHtml | safe }}{% else %}{{ title }}{% endif %}</h1>
+      </div>
+    </section>
+
+    <!-- PAGE INTRO / CONTENT -->
+    <section class="page-intro">
+      <div class="wrap{% if wide %} wrap-wide{% endif %}">
+{% if noWrap %}
+{{ content | safe }}
+{% else %}
+        <div class="page-content">
+          {% if lead %}<p class="lead">{{ lead | safe }}</p>{% endif %}
+{{ content | safe }}
+          {% if cta %}
+          <div class="page-cta">
+            <p>{{ cta | safe }}</p>
+            <a href="#contact" class="btn btn-primary">{{ ctaButton or "Request an Appointment" }}</a>
+          </div>
+          {% endif %}
+        </div>
+{% endif %}
+      </div>
+    </section>
+{% if divider %}
+    <hr class="section-divider" aria-hidden="true">
+{% endif %}
