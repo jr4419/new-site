@@ -112,7 +112,9 @@ p { margin: 0 0 1em; }
 }
 .logo-text {
   font-family: "Pinyon Script", cursive;
-  font-size: 1.5rem;
+  /* Scales with the window: never smaller than 0.95rem, never bigger
+     than 1.45rem. Keeps the one-line name from overflowing on phones. */
+  font-size: clamp(0.95rem, 2.2vw, 1.45rem);
   line-height: 1.2;
   white-space: nowrap;
 }
@@ -126,7 +128,9 @@ p { margin: 0 0 1em; }
 }
 .main-nav {
   display: flex;
-  gap: 18px;
+  /* Tightened from 18px to make room for the one-line logo in the
+     narrow window between 1081px and ~1200px. */
+  gap: 12px;
   font-size: 1.05rem;
 }
 .main-nav a {
@@ -686,7 +690,6 @@ a:focus-visible, button:focus-visible {
   body { font-size: 16px; }
 
   .header-inner { gap: 12px; }
-  .logo-text { font-size: 1.2rem; }
 
   .hero { padding: 28px 0 20px; }
   .hero-actions { flex-direction: column; align-items: stretch; }
