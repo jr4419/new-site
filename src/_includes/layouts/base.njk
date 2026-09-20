@@ -99,7 +99,7 @@
              See FORM-SETUP.md. Until then the form shows a "not connected" message
              instead of silently losing a patient's request. -->
         <form class="contact-form"
-              action="https://formspree.io/f/YOUR_FORM_ID"
+              action="https://formspree.io/f/mljdjbbw
               method="POST"
               aria-label="Consultation request form">
           <label>
@@ -131,12 +131,6 @@
 
           <button type="submit" class="btn btn-primary">Send Request</button>
           <p class="form-status" role="status" aria-live="polite" hidden></p>
-          <p class="form-note">
-            Please keep this to your contact details and a general reason for the visit &mdash;
-            don't send medical records, test results, or other health information through this form.
-            For anything urgent, call <a href="tel:{{ site.phoneTel }}">{{ site.phoneDisplay }}</a>,
-            or dial 911 in an emergency.
-          </p>
         </form>
       </div>
     </section>
