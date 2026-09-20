@@ -5,26 +5,16 @@ eyebrow: Patient Resources
 wide: true
 divider: true
 noWrap: true
-description: Educational articles and resources for patients of Grand Central Vascular Surgery, led by Dr. Thomas F. Qin.
+description: Practical information for patients of Grand Central Vascular Surgery — preparing for your first visit, and how insurance, referrals, and billing work.
 ---
-        <p class="placeholder-note">This page is a placeholder &mdash; our patient education library is coming soon.</p>
-        <div class="blog-grid">
-          {% set articles = [
-            "Understanding Varicose Veins: Causes, Symptoms & Treatment Options",
-            "What to Expect Before and After Your Vein Procedure",
-            "Peripheral Artery Disease: Recognizing the Warning Signs",
-            "Living with Dialysis Access: A Patient's Guide",
-            "Minimally Invasive vs. Open Vascular Surgery: What's the Difference?",
-            "Preparing for Your First Consultation"
-          ] %}
-          {% for article in articles %}
-          <article class="blog-card">
-            <div class="blog-card-media" aria-hidden="true"></div>
-            <div class="blog-card-body">
-              <p class="blog-card-meta">Patient Resources &middot; Coming Soon</p>
-              <h3 class="blog-card-title">{{ article }}</h3>
-              <p class="blog-card-excerpt">This article is currently being written and will be published soon. Check back for in-depth, easy-to-understand guidance from Dr. Qin and the team.</p>
-            </div>
-          </article>
-          {% endfor %}
+        <p class="resources-intro">Practical information to help you prepare for your appointment and understand how your care is covered. If you can&rsquo;t find what you&rsquo;re looking for here, please call the office &mdash; someone will be glad to walk you through it.</p>
+        <div class="resource-grid">
+          {% for cat in nav.categories %}{% if cat.key == "resources" %}{% for item in cat.items %}
+          <a class="resource-card" href="{{ item.url }}">
+            <h2 class="resource-card-title">{{ item.label }}</h2>
+            <p class="resource-card-summary">{{ item.summary }}</p>
+            <span class="resource-card-more" aria-hidden="true">Read more</span>
+          </a>
+          {% endfor %}{% endif %}{% endfor %}
         </div>
+        <p class="resources-note">More patient education articles are in preparation and will be published here as they are ready.</p>
