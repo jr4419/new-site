@@ -114,6 +114,26 @@ collections:
         file: "src/ambulatory-dialysis-access-maintenance.md"
         fields: *proceduresFields
 
+  - name: "resources"
+    label: "Patient Resources"
+    files:
+      - name: "first-visit"
+        label: "Your First Visit"
+        file: "src/your-first-visit.md"
+        fields: &resourceFields
+          - { label: "Layout", name: "layout", widget: "hidden", default: "layouts/page.njk" }
+          - { label: "Title", name: "title", widget: "string" }
+          - { label: "Eyebrow (category label)", name: "eyebrow", widget: "hidden", default: "Patient Resources" }
+          - { label: "SEO Description", name: "description", widget: "text" }
+          - { label: "Intro / Lead Paragraph", name: "lead", widget: "text" }
+          - { label: "Page Content", name: "body", widget: "markdown" }
+          - { label: "Closing Call-to-Action Text", name: "cta", widget: "text", required: false }
+          - { label: "Call-to-Action Button Label", name: "ctaButton", widget: "string", required: false, default: "Request an Appointment" }
+      - name: "insurance-and-billing"
+        label: "Insurance and Billing"
+        file: "src/insurance-and-billing.md"
+        fields: *resourceFields
+
   - name: "settings"
     label: "Site Settings"
     files:
