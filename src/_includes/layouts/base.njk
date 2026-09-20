@@ -16,20 +16,20 @@
 
   <header class="site-header">
     <input type="checkbox" id="nav-toggle" class="nav-toggle-checkbox">
-    <div class="wrap header-inner">
+    <div class="wrap header-inner header-logo-row">
       <a href="/#top" class="logo" aria-label="Grand Central Vascular Surgery &amp; Vein Center — home">
-        <span class="logo-mark" aria-hidden="true">
-          <svg viewBox="0 0 44 44" width="40" height="40" focusable="false">
-            <rect width="44" height="44" rx="3" fill="currentColor"></rect>
-            <path d="M22 36 V25 C22 20.4 18.6 17.4 14 15.2 M22 25 C22 20.4 25.4 17.4 30 15.2"
-                  fill="none" stroke="#FFFFFF" stroke-width="2.6" stroke-linecap="round"></path>
-          </svg>
-        </span>
         <span class="logo-text-wrap">
           <span class="logo-name">Grand Central</span>
-          <span class="logo-sub">Vascular Surgery &amp; Vein Center</span>
+          <span class="logo-name">Vascular Surgery <span class="amp">&amp;</span> Vein Center</span>
+          <span class="logo-tagline">Comprehensive and professional vascular care.</span>
         </span>
       </a>
+      <a href="#contact" class="btn btn-primary nav-cta">Contact Us</a>
+      <label for="nav-toggle" class="nav-toggle-btn" aria-label="Open menu">
+        <span></span><span></span><span></span>
+      </label>
+    </div>
+    <div class="wrap header-inner header-nav-row">
       <nav class="main-nav">
         {% for cat in nav.categories %}
         <div class="nav-item">
@@ -43,10 +43,6 @@
         {% endfor %}
         <a href="/patient-resources.html">Patient Resources</a>
       </nav>
-      <a href="#contact" class="btn btn-primary nav-cta">Contact Us</a>
-      <label for="nav-toggle" class="nav-toggle-btn" aria-label="Open menu">
-        <span></span><span></span><span></span>
-      </label>
     </div>
     <nav class="mobile-nav">
       {% for cat in nav.categories %}
