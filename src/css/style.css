@@ -105,25 +105,37 @@ p { margin: 0 0 1em; }
   color: var(--ink);
   flex-shrink: 0;
 }
-.logo-mark { color: var(--clay); display: flex; flex-shrink: 0; }
+.logo-mark {
+  color: var(--teal);
+  display: flex;
+  flex-shrink: 0;
+}
+.logo-mark svg { display: block; }
 .logo-text-wrap {
   display: flex;
   flex-direction: column;
+  justify-content: center;
 }
-.logo-text {
-  font-family: "Pinyon Script", cursive;
-  /* Scales with the window: never smaller than 0.95rem, never bigger
-     than 1.45rem. Keeps the one-line name from overflowing on phones. */
-  font-size: clamp(0.95rem, 2.2vw, 1.45rem);
-  line-height: 1.2;
+/* Practice name: the display serif, tightened up. Scales with the window
+   so the lockup never overflows the header on small screens. */
+.logo-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: clamp(1.02rem, 2vw, 1.32rem);
+  letter-spacing: -0.005em;
+  line-height: 1.1;
   white-space: nowrap;
 }
-.logo-tagline {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 0.7rem;
-  font-weight: 400;
-  color: #4F6A80;
-  margin-top: 2px;
+/* Descriptor line: small, tracked-out, quiet. Carries the full practice
+   name for search engines and screen readers without shouting. */
+.logo-sub {
+  font-family: var(--font-body);
+  font-size: 0.6rem;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: #5B7A91;
+  margin-top: 4px;
   white-space: nowrap;
 }
 .main-nav {
@@ -206,14 +218,12 @@ p { margin: 0 0 1em; }
     min-width: 0;
     overflow: hidden;
   }
-  .logo-text {
+  .logo-name,
+  .logo-sub {
     display: block;
     overflow: hidden;
     text-overflow: ellipsis;
     max-width: 100%;
-  }
-  .logo-tagline {
-    display: none;
   }
 }
 
@@ -655,11 +665,37 @@ p { margin: 0 0 1em; }
   outline-offset: 1px;
 }
 .contact-form button { align-self: flex-start; }
+.contact-form button[disabled] {
+  opacity: 0.6;
+  cursor: progress;
+}
+/* Honeypot: off-screen for people, visible to bots. Never display: none —
+   some bots skip hidden fields, which defeats the trap. */
+.form-trap {
+  position: absolute;
+  left: -10000px;
+  width: 1px;
+  height: 1px;
+  overflow: hidden;
+}
+.form-status {
+  margin: 0;
+  padding: 12px 14px;
+  font-size: 0.92rem;
+  border-left: 3px solid var(--teal);
+  background: var(--cream);
+}
+.form-status[hidden] { display: none; }
+.form-status.is-error {
+  border-left-color: #B3261E;
+  color: #7A1C15;
+}
 .form-note {
   font-size: 0.8rem;
-  color: #6b6b6b;
+  color: #55707F;
   margin: 0;
 }
+.form-note a { font-weight: 600; color: var(--teal); }
 
 @media (max-width: 820px) {
   .contact-inner { grid-template-columns: 1fr; }
@@ -718,120 +754,60 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ============================
-   Facility gallery (home)
+   Home intro (photo + copy)
    ============================ */
-.gallery { padding: 36px 0 28px; }
-.gallery-head {
-  max-width: 640px;
-  margin-bottom: 22px;
+.intro { padding: 44px 0 40px; }
+.intro-inner {
+  display: grid;
+  grid-template-columns: 1fr 1.05fr;
+  gap: 48px;
+  align-items: center;
 }
-.gallery-head h1 {
-  font-size: clamp(2rem, 4.5vw, 3rem);
+.intro h1 {
+  font-size: clamp(2rem, 4.4vw, 3rem);
   letter-spacing: -0.01em;
 }
-.gallery-lead {
+.intro-lead {
   font-size: 1.08rem;
   color: #33495A;
+  max-width: 46ch;
   margin: 0;
 }
-.gallery-slideshow {
-  position: relative;
-  aspect-ratio: 16/7;
+.intro-actions {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 1.7em;
+}
+.intro-photo {
+  margin: 0;
+  aspect-ratio: 4 / 3;
+  background: var(--teal);
   border-radius: var(--radius);
   overflow: hidden;
 }
-.gallery-slides {
-  position: relative;
-  width: 100%;
-  height: 100%;
-}
-.gallery-slide {
-  position: absolute;
-  inset: 0;
-  margin: 0;
-  background: linear-gradient(135deg, var(--teal), var(--ink));
-  opacity: 0;
-  transition: opacity 0.6s ease;
-}
-.gallery-slide.is-active {
-  opacity: 1;
-  z-index: 1;
-}
-.gallery-slide img {
+.intro-photo img {
   width: 100%;
   height: 100%;
   object-fit: cover;
 }
-.gallery-caption {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  z-index: 1;
-  padding: 18px 22px;
-  color: var(--white);
-  font-family: var(--font-display);
-  font-weight: 600;
-  font-size: 1.05rem;
-  line-height: 1.2;
-  background: linear-gradient(to top, rgba(0,0,0,0.6), transparent);
-}
-.gallery-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 2;
-  width: 40px;
-  height: 40px;
-  border: none;
-  border-radius: 50%;
-  background: rgba(16, 42, 60, 0.55);
-  color: var(--white);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  transition: background 0.2s ease;
-}
-.gallery-arrow:hover { background: rgba(16, 42, 60, 0.85); }
-.gallery-arrow-prev { left: 16px; }
-.gallery-arrow-next { right: 16px; }
-.gallery-dots {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 14px;
-  z-index: 2;
-  display: flex;
-  justify-content: center;
-  gap: 8px;
-}
-.gallery-dot {
-  width: 8px;
-  height: 8px;
-  border-radius: 50%;
-  border: none;
-  padding: 0;
-  background: rgba(255,255,255,0.55);
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-.gallery-dot.is-active {
-  background: var(--white);
-  transform: scale(1.25);
-}
-.gallery-actions {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  margin-top: 32px;
-}
 
-@media (max-width: 520px) {
-  .gallery { padding: 24px 0 18px; }
-  .gallery-slideshow { aspect-ratio: 4/3; }
-  .gallery-actions { flex-direction: column; align-items: stretch; }
-  .gallery-actions .btn { text-align: center; }
+@media (max-width: 900px) {
+  .intro-inner {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .intro-photo { aspect-ratio: 16 / 10; }
+}
+@media (max-width: 600px) {
+  .intro { padding: 28px 0 32px; }
+  .intro-actions { flex-direction: column; align-items: stretch; }
+  .intro-actions .btn { text-align: center; }
+  /* Keep the full practice name on phones, just quieter and tighter. */
+  .logo-sub {
+    font-size: 0.55rem;
+    letter-spacing: 0.1em;
+  }
 }
 
 /* ============================
