@@ -33,7 +33,7 @@ img, svg { max-width: 100%; display: block; }
 a { color: inherit; text-decoration: none; }
 ul { padding: 0; margin: 0; list-style: none; }
 h1, h2, h3 { font-family: var(--font-display); font-weight: 600; margin: 0 0 0.5em; line-height: 1.15; }
-h1 .amp, h2 .amp, h3 .amp {
+h1 .amp, h2 .amp, h3 .amp, .logo-name .amp {
   font-family: var(--font-body);
   font-weight: 600;
 }
@@ -90,59 +90,65 @@ p { margin: 0 0 1em; }
   border-bottom: 1px solid var(--line);
   box-shadow: 0 1px 3px rgba(16, 42, 60, 0.06);
 }
+/* The header is two rows: the practice name sits on its own row, with the
+   menu on a second row beneath it. Both rows use .header-inner for their
+   flex behaviour; the padding differs, so it lives on the row classes. */
 .header-inner {
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding-top: 16px;
-  padding-bottom: 16px;
   gap: 24px;
+}
+.header-logo-row {
+  padding-top: 15px;
+  padding-bottom: 11px;
+  gap: 16px;
+}
+.header-nav-row {
+  justify-content: flex-start;
+  padding-bottom: 13px;
 }
 .logo {
   display: flex;
   align-items: center;
-  gap: 10px;
   color: var(--ink);
   flex-shrink: 0;
+  min-width: 0;
 }
-.logo-mark {
-  color: var(--teal);
-  display: flex;
-  flex-shrink: 0;
-}
-.logo-mark svg { display: block; }
 .logo-text-wrap {
   display: flex;
   flex-direction: column;
   justify-content: center;
+  min-width: 0;
 }
-/* Practice name: the display serif, tightened up. Scales with the window
-   so the lockup never overflows the header on small screens. */
+/* Practice name: two lines of the display serif, same size and colour, set
+   tight. There's no icon, so the text starts flush with the content column
+   and lines up with the menu row below it. */
 .logo-name {
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: clamp(1.02rem, 2vw, 1.32rem);
+  font-size: 1.32rem;
+  color: var(--teal);
   letter-spacing: -0.005em;
-  line-height: 1.1;
+  line-height: 1.08;
   white-space: nowrap;
 }
-/* Descriptor line: small, tracked-out, quiet. Carries the full practice
-   name for search engines and screen readers without shouting. */
-.logo-sub {
+.logo-name + .logo-name { margin-top: 2px; }
+/* Tagline: body font, sentence case, a lightened teal so it reads as a
+   supporting line rather than a third title. The hex is the color-mix
+   value, kept as a fallback for browsers that don't support color-mix. */
+.logo-tagline {
   font-family: var(--font-body);
-  font-size: 0.6rem;
-  font-weight: 600;
-  letter-spacing: 0.15em;
-  text-transform: uppercase;
-  color: #5B7A91;
-  margin-top: 4px;
-  white-space: nowrap;
+  font-size: 0.82rem;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  color: #5583A7;
+  color: color-mix(in srgb, var(--teal) 76%, #FFFFFF);
+  margin-top: 6px;
 }
 .main-nav {
   display: flex;
-  /* Tightened from 18px to make room for the one-line logo in the
-     narrow window between 1081px and ~1200px. */
-  gap: 12px;
+  gap: 20px;
   font-size: 1.05rem;
 }
 .main-nav a {
@@ -209,6 +215,8 @@ p { margin: 0 0 1em; }
 @media (max-width: 1080px) {
   .main-nav { display: none; }
   .nav-cta { display: none; }
+  /* The menu row has nothing left in it here — the hamburger takes over. */
+  .header-nav-row { display: none; }
   .nav-toggle-btn { display: flex; }
   .logo {
     flex: 1 1 auto;
@@ -216,13 +224,12 @@ p { margin: 0 0 1em; }
   }
   .logo-text-wrap {
     min-width: 0;
-    overflow: hidden;
   }
+  /* Narrow screens wrap the name over more lines rather than clipping it. */
   .logo-name,
-  .logo-sub {
+  .logo-tagline {
     display: block;
-    overflow: hidden;
-    text-overflow: ellipsis;
+    white-space: normal;
     max-width: 100%;
   }
 }
@@ -807,11 +814,10 @@ a:focus-visible, button:focus-visible {
   .intro { padding: 28px 0 32px; }
   .intro-actions { flex-direction: column; align-items: stretch; }
   .intro-actions .btn { text-align: center; }
-  /* Keep the full practice name on phones, just quieter and tighter. */
-  .logo-sub {
-    font-size: 0.55rem;
-    letter-spacing: 0.1em;
-  }
+  /* The full lockup is three lines, so ease it down a little on phones to
+     keep the sticky header from eating the top of the screen. */
+  .logo-name { font-size: 1.18rem; }
+  .logo-tagline { font-size: 0.76rem; margin-top: 4px; }
 }
 
 /* ============================
