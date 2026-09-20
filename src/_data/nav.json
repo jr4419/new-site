@@ -39,6 +39,24 @@
         { "label": "Ambulatory Leg Artery Endovascular Recanalization", "url": "/ambulatory-leg-artery-endovascular-recanalization.html" },
         { "label": "Ambulatory Dialysis Access Maintenance", "url": "/ambulatory-dialysis-access-maintenance.html" }
       ]
+    },
+    {
+      "key": "resources",
+      "label": "Patient Resources",
+      "eyebrow": "Patient Resources",
+      "url": "/patient-resources.html",
+      "items": [
+        {
+          "label": "Your First Visit",
+          "url": "/your-first-visit.html",
+          "summary": "What to bring, how to prepare, and what happens during your appointment."
+        },
+        {
+          "label": "Insurance and Billing",
+          "url": "/insurance-and-billing.html",
+          "summary": "Verifying coverage, referrals and authorization, and self-pay estimates."
+        }
+      ]
     }
   ]
 }
