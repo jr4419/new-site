@@ -1,0 +1,62 @@
+name: Build and deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      - name: Install dependencies
+        run: npm install
+
+      # Path prefix: "/" for custom domain or user.github.io repos,
+      # "/repo-name/" for project sites like this one.
+      - name: Determine path prefix
+        id: prefix
+        run: |
+          REPO_NAME="${GITHUB_REPOSITORY#*/}"
+          if [ -f CNAME ] || [[ "$REPO_NAME" == *.github.io ]]; then
+            echo "value=/" >> "$GITHUB_OUTPUT"
+          else
+            echo "value=/$REPO_NAME/" >> "$GITHUB_OUTPUT"
+          fi
+
+      - name: Build site
+        run: npx @11ty/eleventy --pathprefix="${{ steps.prefix.outputs.value }}"
+
+      - name: Copy CNAME into build (if present)
+        run: if [ -f CNAME ]; then cp CNAME _site/CNAME; fi
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: _site
+
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
