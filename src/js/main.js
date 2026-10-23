@@ -3,6 +3,114 @@ const yearEl = document.getElementById('year');
 if (yearEl) yearEl.textContent = new Date().getFullYear();
 
 // ---------------------------------------------------------------------------
+// Homepage office gallery
+//
+// Fades between the photos inside [data-gallery]. Without this script the
+// first photo just shows on its own, so nothing breaks if JS fails to load.
+// - Advances every 5 seconds, but pauses while the visitor hovers over it,
+//   is using the arrows/dots with the keyboard, or has the tab in the
+//   background.
+// - Never auto-advances for visitors who've asked their device to reduce
+//   motion; they can still step through with the arrows.
+// - Supports left/right swipe on phones and arrow keys on desktop.
+// ---------------------------------------------------------------------------
+document.querySelectorAll('[data-gallery]').forEach((gallery) => {
+  const slides = Array.from(gallery.querySelectorAll('.gallery-slide'));
+  if (slides.length < 2) return;
+
+  const prev = gallery.querySelector('.gallery-prev');
+  const next = gallery.querySelector('.gallery-next');
+  const dotsWrap = gallery.querySelector('.gallery-dots');
+  const INTERVAL = 5000;
+  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  let index = 0;
+  let timer = null;
+  let paused = false;
+
+  // Build one dot per photo.
+  const dots = slides.map((slide, i) => {
+    const dot = document.createElement('button');
+    dot.type = 'button';
+    dot.className = 'gallery-dot';
+    const caption = slide.querySelector('figcaption');
+    dot.setAttribute('aria-label', `Show photo ${i + 1}${caption ? ': ' + caption.textContent.trim() : ''}`);
+    dot.addEventListener('click', () => { show(i); restart(); });
+    dotsWrap.appendChild(dot);
+    return dot;
+  });
+
+  function show(i) {
+    index = (i + slides.length) % slides.length;
+    slides.forEach((slide, n) => {
+      const active = n === index;
+      slide.classList.toggle('is-active', active);
+      slide.setAttribute('aria-hidden', active ? 'false' : 'true');
+      slide.setAttribute('aria-roledescription', 'slide');
+      slide.setAttribute('aria-label', `${n + 1} of ${slides.length}`);
+    });
+    dots.forEach((dot, n) => {
+      if (n === index) dot.setAttribute('aria-current', 'true');
+      else dot.removeAttribute('aria-current');
+    });
+  }
+
+  function stop() {
+    clearInterval(timer);
+    timer = null;
+  }
+  function start() {
+    if (reduceMotion || paused || document.hidden) return;
+    stop();
+    timer = setInterval(() => show(index + 1), INTERVAL);
+  }
+  function restart() { stop(); start(); }
+
+  prev.addEventListener('click', () => { show(index - 1); restart(); });
+  next.addEventListener('click', () => { show(index + 1); restart(); });
+
+  // Pause while hovered or while keyboard focus is inside the gallery.
+  gallery.addEventListener('mouseenter', () => { paused = true; stop(); });
+  gallery.addEventListener('mouseleave', () => { paused = false; start(); });
+  gallery.addEventListener('focusin', () => { paused = true; stop(); });
+  gallery.addEventListener('focusout', (e) => {
+    if (!gallery.contains(e.relatedTarget)) { paused = false; start(); }
+  });
+  document.addEventListener('visibilitychange', () => {
+    if (document.hidden) stop(); else start();
+  });
+
+  // Arrow keys when focus is on one of the gallery's buttons.
+  gallery.addEventListener('keydown', (e) => {
+    if (e.key === 'ArrowLeft') { show(index - 1); e.preventDefault(); }
+    if (e.key === 'ArrowRight') { show(index + 1); e.preventDefault(); }
+  });
+
+  // Swipe on touch screens.
+  let touchX = null;
+  gallery.addEventListener('touchstart', (e) => {
+    touchX = e.touches[0].clientX;
+  }, { passive: true });
+  gallery.addEventListener('touchend', (e) => {
+    if (touchX === null) return;
+    const dx = e.changedTouches[0].clientX - touchX;
+    touchX = null;
+    if (Math.abs(dx) > 40) {
+      show(dx < 0 ? index + 1 : index - 1);
+      restart();
+    }
+  }, { passive: true });
+
+  // Switch the gallery on.
+  prev.hidden = false;
+  next.hidden = false;
+  dotsWrap.hidden = false;
+  gallery.classList.add('is-ready');
+  show(0);
+  start();
+});
+
+// ---------------------------------------------------------------------------
 // Consultation request form
 //
 // The form posts to Formspree (see FORM-SETUP.md). Posting with fetch instead
