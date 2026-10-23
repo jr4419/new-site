@@ -671,10 +671,6 @@ p { margin: 0 0 1em; }
 .btn-ghost-inverse:hover { background: var(--cream); color: var(--ink); }
 
 /* ============================
-   Footer
-   ============================ */
-
-/* ============================
    Approach
    ============================ */
 .approach { padding: 64px 0; background: var(--white); }
@@ -828,7 +824,7 @@ a:focus-visible, button:focus-visible {
 }
 
 /* ============================
-   Home intro (photo + copy)
+   Home intro (copy + office gallery)
    ============================ */
 .intro { padding: 44px 0 40px; }
 .intro-inner {
@@ -853,21 +849,129 @@ a:focus-visible, button:focus-visible {
   flex-wrap: wrap;
   margin-top: 1.7em;
 }
-.intro-photo {
-  margin: 0;
+
+/* Office gallery: the photos are stacked in one 3:2 frame and cross-fade.
+   Only the .is-active photo is visible; js/main.js moves that class along.
+   Each photo's crop is set by object-position in index.html. */
+.intro-gallery {
+  position: relative;
   aspect-ratio: 3 / 2;
   background: var(--teal);
   border-radius: var(--radius);
   overflow: hidden;
 }
-.intro-photo img {
+.gallery-slides {
+  position: absolute;
+  inset: 0;
+}
+.gallery-slide {
+  position: absolute;
+  inset: 0;
+  margin: 0;
+  opacity: 0;
+  transition: opacity 0.8s ease;
+}
+.gallery-slide.is-active {
+  opacity: 1;
+  z-index: 1;
+}
+.gallery-slide img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  /* The photo is wider than the frame, so it gets cropped. Holding the
-     crop slightly right of centre keeps the patient's face off the edge.
-     Adjust this one number if you swap in a different photo. */
-  object-position: 62% center;
+}
+/* Caption sits bottom-left over a soft gradient; the right padding leaves
+   room for the dots. */
+.gallery-slide figcaption {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  padding: 40px 120px 16px 18px;
+  background: linear-gradient(to top, rgba(16, 42, 60, 0.72), rgba(16, 42, 60, 0));
+  color: var(--white);
+  font-size: 0.92rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.3;
+}
+
+/* Previous / next arrows: shown on hover with a mouse, always on touch
+   screens, and whenever they have keyboard focus. */
+.gallery-arrow {
+  position: absolute;
+  top: 50%;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
+  padding: 0;
+  border: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.88);
+  color: var(--ink);
+  cursor: pointer;
+  opacity: 0;
+  transition: opacity 0.2s ease, background 0.2s ease;
+}
+.gallery-arrow[hidden] { display: none; }
+.gallery-arrow:hover { background: var(--white); }
+.intro-gallery:hover .gallery-arrow,
+.gallery-arrow:focus-visible { opacity: 1; }
+@media (hover: none) {
+  .gallery-arrow { opacity: 1; width: 36px; height: 36px; margin-top: -18px; }
+}
+.gallery-prev { left: 12px; }
+.gallery-next { right: 12px; }
+.gallery-arrow::before {
+  content: "";
+  width: 9px;
+  height: 9px;
+  border-right: 2px solid currentColor;
+  border-bottom: 2px solid currentColor;
+}
+.gallery-prev::before { transform: translateX(2px) rotate(135deg); }
+.gallery-next::before { transform: translateX(-2px) rotate(-45deg); }
+
+/* Dots: each button is a 22px tap target with a small dot drawn inside. */
+.gallery-dots {
+  position: absolute;
+  right: 10px;
+  bottom: 9px;
+  z-index: 2;
+  display: flex;
+}
+.gallery-dots[hidden] { display: none; }
+.gallery-dot {
+  width: 22px;
+  height: 22px;
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.gallery-dot::before {
+  content: "";
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.5);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+.gallery-dot:hover::before { background: rgba(255, 255, 255, 0.85); }
+.gallery-dot[aria-current="true"]::before {
+  background: var(--white);
+  transform: scale(1.25);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .gallery-slide { transition: none; }
 }
 
 @media (max-width: 900px) {
@@ -875,12 +979,15 @@ a:focus-visible, button:focus-visible {
     grid-template-columns: 1fr;
     gap: 28px;
   }
-  .intro-photo { aspect-ratio: 3 / 2; }
 }
 @media (max-width: 600px) {
   .intro { padding: 28px 0 32px; }
   .intro-actions { flex-direction: column; align-items: stretch; }
   .intro-actions .btn { text-align: center; }
+  .gallery-slide figcaption {
+    padding: 30px 104px 13px 14px;
+    font-size: 0.84rem;
+  }
   /* The full lockup is three lines, so ease it down a little on phones to
      keep the sticky header from eating the top of the screen. */
   .logo-name { font-size: 1.18rem; }
@@ -921,6 +1028,25 @@ a:focus-visible, button:focus-visible {
 .page-content ol li { margin-bottom: 0.35em; }
 .page-content p { margin: 0 0 0.85em; }
 .page-content strong { color: var(--ink); }
+
+/* A photo inside page content (e.g. the front desk on Your First Visit).
+   Held to a 2:1 frame so it doesn't dominate the text around it. */
+.page-figure {
+  margin: 1.4em 0 1.6em;
+}
+.page-figure img {
+  width: 100%;
+  height: auto; /* without this, the img's height attribute overrides the ratio */
+  aspect-ratio: 2 / 1;
+  object-fit: cover;
+  border-radius: var(--radius);
+  background: var(--teal);
+}
+.page-figure figcaption {
+  margin-top: 0.6em;
+  font-size: 0.88rem;
+  color: #55707F;
+}
 
 .page-cta {
   margin-top: 2.4em;
