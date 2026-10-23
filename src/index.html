@@ -14,13 +14,54 @@ description: Grand Central Vascular Surgery, led by Dr. Thomas F. Qin, provides 
           </div>
         </div>
 
-        <!-- TODO: swap in a real photo of Dr. Qin with a patient when you have one.
-             Drop the file in src/images/ and change the src below. -->
-        <figure class="intro-photo">
-          <img src="/images/uploads/consultation.jpg"
-               alt="A patient talking with a clinician during a consultation"
-               width="1365" height="684">
-        </figure>
+        <!-- OFFICE PHOTO GALLERY
+             Photos live in src/images/uploads/. Keep each one around 1600px
+             wide and under ~500 KB so the homepage loads quickly on phones.
+             - To replace a photo: upload the new file under the same name.
+             - To add a photo: copy one <figure> block below and change the
+               file name, alt text, caption, and crop. The dots and arrows
+               are built automatically by js/main.js.
+             - Crop focus is the "object-position" in each style="" attribute
+               (horizontal %, vertical %).
+             Without JavaScript, the first photo simply shows on its own. -->
+        <div class="intro-gallery" data-gallery
+             role="region" aria-roledescription="carousel" aria-label="Photos of our office">
+          <div class="gallery-slides">
+            <figure class="gallery-slide is-active">
+              <img src="/images/uploads/office-reception.jpg"
+                   alt="The reception desk and waiting area, with the vascular lab and physician office doors beyond"
+                   width="1600" height="745" fetchpriority="high" decoding="async"
+                   style="object-position: 50% 62%;">
+              <figcaption>Reception and waiting area</figcaption>
+            </figure>
+            <figure class="gallery-slide">
+              <img src="/images/uploads/exam-room.jpg"
+                   alt="An exam room with an adjustable exam chair beside a portable ultrasound machine"
+                   width="1600" height="736" loading="lazy" decoding="async"
+                   style="object-position: 46% 55%;">
+              <figcaption>Exam and ultrasound room</figcaption>
+            </figure>
+            <figure class="gallery-slide">
+              <img src="/images/uploads/procedure-room.jpg"
+                   alt="The procedure room, with a procedure table under a surgical light, patient monitor, and instrument cart"
+                   width="1600" height="977" loading="lazy" decoding="async"
+                   style="object-position: 56% 55%;">
+              <figcaption>Procedure room</figcaption>
+            </figure>
+            <figure class="gallery-slide">
+              <img src="/images/uploads/office-entrance.jpg"
+                   alt="The glass entrance door lettered Grand Central Vascular Surgery and Vein Center"
+                   width="842" height="1600" loading="lazy" decoding="async"
+                   style="object-position: 50% 40%;">
+              <figcaption>Suite 1501C, 315 Madison Avenue</figcaption>
+            </figure>
+          </div>
+
+          <!-- Controls stay hidden until main.js switches the gallery on. -->
+          <button type="button" class="gallery-arrow gallery-prev" aria-label="Previous photo" hidden></button>
+          <button type="button" class="gallery-arrow gallery-next" aria-label="Next photo" hidden></button>
+          <div class="gallery-dots" hidden></div>
+        </div>
       </div>
     </section>
 
